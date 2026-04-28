@@ -19,7 +19,7 @@
     <div class="nav-container">
       <a href="#" class="nav-logo">
         <img src="img/TaskMaster_logo.png" alt="Logo de TaskMaster" width="80" height="80">
-        <span>TaskMaster</span>
+
       </a>
       <ul class="nav-menu">
 
@@ -28,11 +28,15 @@
         <li><a href="#about" class="nav-link" data-i18n="nav.about">Nosotros</a></li>
         <li><a href="#faq-section" class="nav-link" data-i18n="nav.faq">FAQ</a></li>
         <li><a href="#contact" class="nav-link" data-i18n="nav.contact">Contáctanos</a></li>
-         <li>
-        <a href="login.html" class="nav-link button-link" data-i18n="nav.downloadApp" target="_blank">
-          Descargar App
-        </a>
-      </li>
+        <li>
+          <a href="login.html" class="nav-link button-link button-link-login" target="_blank" rel="noopener">
+            Login
+          </a>
+        </li>
+        <li>
+          <a href="login.html" class="nav-link button-link button-link-primary" target="_blank" rel="noopener">
+            Empieza Gratis
+          </a>
         </li>
       </ul>
       <button class="theme-toggle" aria-label="Cambiar modo oscuro/claro" title="Cambiar tema">
@@ -67,7 +71,10 @@
       <div class="hero-content">
         <h1 data-i18n="hero.title">Transforma la gestión de tus proyectos con <span class="highlight">TaskMaster</span></h1>
         <p class="hero-description" data-i18n="hero.description">Acelera la colaboración y mantén el control total de proyectos</p>
-  <a href="login.html" class="cta-button" data-i18n="hero.cta" target="_blank" rel="noopener">Descargar Aplicación</a>
+        <div class="hero-actions">
+          <a href="login.html" class="cta-button cta-button-secondary" target="_blank" rel="noopener">Empezar Gratis</a>
+          <a href="login.html" class="cta-button" data-i18n="hero.cta" target="_blank" rel="noopener">Descargar Aplicación</a>
+        </div>
       </div>
       
     </div>
@@ -76,48 +83,77 @@
   <main>
     <section id="features" class="features">
       <div class="container">
-        <h2 class="section-title" data-i18n="features.title">Características principales</h2>
-        <div class="feature-item">
-  <div class="feature-image">
-    <div class="app-mockup1">
-      <div class="phone1">
-        <img src="img/sp1.png" alt="Pantalla App" />
-      </div>
-    </div>
-  </div>
-  <div class="feature-content">
-    <h3 data-i18n="features.sprint_stats.title">Gestión de Proyectos y Tareas</h3>
-    <p data-i18n="features.sprint_stats.description">Organiza tus proyectos y tareas en un solo lugar. Asigna responsabilidades, define plazos y prioridades, y permite a los miembros del equipo actualizar su progreso en tiempo real. Asegura un flujo de trabajo ordenado y eficiente, sin duplicidad de esfuerzos.</p>
-  </div>
-</div>
-
-
-        <div class="feature-item reverse">
-          <div class="feature-image">
-    <div class="app-mockup1">
-      <div class="phone1">
-        <img src="img/sp3.png" alt="Pantalla App" />
-      </div>
-    </div>
-  </div>
-          <div class="feature-content">
-            <h3 data-i18n="features.team_management.title">Colaboración en Tiempo Real</h3>
-            <p data-i18n="features.team_management.description">Facilita la comunicación entre los miembros del equipo mediante notificaciones instantáneas. Los cambios en las tareas y proyectos se reflejan en tiempo real, asegurando que todos los miembros estén siempre alineados y actualizados.</p>
-          </div>
-          
+        <div class="section-heading section-heading--centered">
+          <p class="section-kicker" data-i18n="features.kicker">Potencia tu equipo</p>
+          <h2 class="section-title" data-i18n="features.title">Características principales</h2>
         </div>
 
-        <div class="feature-item">
-          <div class="feature-image">
-    <div class="app-mockup1">
-      <div class="phone1">
-        <img src="img/s23.png" alt="Pantalla App" />
-      </div>
-    </div>
-  </div>
-          <div class="feature-content">
-            <h3 data-i18n="features.backlog_management.title">Visualización y Seguimiento del Progreso</h3>
-            <p data-i18n="features.backlog_management.description">Visualiza el estado de los proyectos y tareas a través de tableros y calendarios interactivos. Permite un seguimiento claro y efectivo del avance, ayudando a los líderes de proyecto a identificar rápidamente posibles retrasos o áreas que requieren atención.</p>
+        <div class="feature-slider" aria-label="Carrusel de características">
+          <div class="feature-viewport">
+            <article class="feature-slide active" id="feature-slide-0">
+              <div class="feature-copy">
+                <div class="feature-icon">
+                  <i class="bi bi-kanban"></i>
+                </div>
+                <h3 data-i18n="features.sprint_stats.title">Gestión de Proyectos y Tareas</h3>
+                <p data-i18n="features.sprint_stats.description">Organiza tus proyectos y tareas en un solo lugar. Asigna responsabilidades, define plazos y prioridades, y permite a los miembros del equipo actualizar su progreso en tiempo real. Asegura un flujo de trabajo ordenado y eficiente, sin duplicidad de esfuerzos.</p>
+                <ul class="feature-points">
+                  <li><i class="bi bi-check2"></i><span data-i18n="features.sprint_stats.point_1">Asignación inteligente</span></li>
+                  <li><i class="bi bi-check2"></i><span data-i18n="features.sprint_stats.point_2">Flujo sin duplicidad</span></li>
+                </ul>
+              </div>
+              <div class="feature-media">
+                <img src="img/sp1.png" alt="Pantalla de gestión de proyectos" />
+              </div>
+            </article>
+
+            <article class="feature-slide feature-slide--reverse" id="feature-slide-1">
+              <div class="feature-copy">
+                <div class="feature-icon">
+                  <i class="bi bi-chat-dots"></i>
+                </div>
+                <h3 data-i18n="features.team_management.title">Colaboración en Tiempo Real</h3>
+                <p data-i18n="features.team_management.description">Facilita la comunicación entre los miembros del equipo mediante notificaciones instantáneas. Los cambios en las tareas y proyectos se reflejan en tiempo real, asegurando que todos los miembros estén siempre alineados y actualizados.</p>
+                <ul class="feature-points">
+                  <li><i class="bi bi-check2"></i><span data-i18n="features.team_management.point_1">Notificaciones instantáneas</span></li>
+                  <li><i class="bi bi-check2"></i><span data-i18n="features.team_management.point_2">Equipo siempre alineado</span></li>
+                </ul>
+              </div>
+              <div class="feature-media">
+                <img src="img/sp3.png" alt="Pantalla de colaboración en tiempo real" />
+              </div>
+            </article>
+
+            <article class="feature-slide" id="feature-slide-2">
+              <div class="feature-copy">
+                <div class="feature-icon">
+                  <i class="bi bi-graph-up-arrow"></i>
+                </div>
+                <h3 data-i18n="features.backlog_management.title">Visualización y Seguimiento del Progreso</h3>
+                <p data-i18n="features.backlog_management.description">Visualiza el estado de los proyectos y tareas a través de tableros y calendarios interactivos. Permite un seguimiento claro y efectivo del avance, ayudando a los líderes de proyecto a identificar rápidamente posibles retrasos o áreas que requieren atención.</p>
+                <ul class="feature-points">
+                  <li><i class="bi bi-check2"></i><span data-i18n="features.backlog_management.point_1">Tableros interactivos</span></li>
+                  <li><i class="bi bi-check2"></i><span data-i18n="features.backlog_management.point_2">Detección de retrasos</span></li>
+                </ul>
+              </div>
+              <div class="feature-media">
+                <img src="img/s23.png" alt="Pantalla de seguimiento del progreso" />
+              </div>
+            </article>
+          </div>
+
+          <div class="feature-controls">
+            <button class="feature-arrow feature-prev" type="button" aria-label="Característica anterior">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <div class="feature-dots" aria-label="Navegación de características">
+              <button class="feature-dot active" type="button" data-slide="0" aria-label="Ir a la característica 1"></button>
+              <button class="feature-dot" type="button" data-slide="1" aria-label="Ir a la característica 2"></button>
+              <button class="feature-dot" type="button" data-slide="2" aria-label="Ir a la característica 3"></button>
+            </div>
+            <button class="feature-arrow feature-next" type="button" aria-label="Característica siguiente">
+              <i class="bi bi-chevron-right"></i>
+            </button>
           </div>
         </div>
       </div>
@@ -234,6 +270,14 @@
         <div class="team-info">
           <h3>Valentino Sandoval</h3>
           <p>CEO & Fundador</p>
+          <div class="team-social">
+            <a href="https://www.linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn de Valentino Sandoval" class="team-social-link">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="https://github.com" target="_blank" rel="noopener" aria-label="GitHub de Valentino Sandoval" class="team-social-link">
+              <i class="bi bi-github"></i>
+            </a>
+          </div>
         </div>
       </div>
 
@@ -243,32 +287,64 @@
         <div class="team-info">
           <h3>Omar Luquilla</h3>
           <p>CTO - Ingeniería de Software</p>
+          <div class="team-social">
+            <a href="https://www.linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn de Omar Luquilla" class="team-social-link">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="https://github.com" target="_blank" rel="noopener" aria-label="GitHub de Omar Luquilla" class="team-social-link">
+              <i class="bi bi-github"></i>
+            </a>
+          </div>
         </div>
       </div>
 
       <!-- Card 3 -->
       <div class="team-card">
-        <img src="img/Alvaro.png" alt="Integrante 3">
+        <img src="img/Luciana.png" alt="Integrante 3">
         <div class="team-info">
-          <h3>Alvaro Bejarano</h3>
+          <h3>Luciana Sanchez</h3>
           <p>Especialista en Data & Estrategia</p>
+          <div class="team-social">
+            <a href="https://www.linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn de Luciana Sanchez" class="team-social-link">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="https://github.com" target="_blank" rel="noopener" aria-label="GitHub de Luciana Sanchez" class="team-social-link">
+              <i class="bi bi-github"></i>
+            </a>
+          </div>
         </div>
       </div>
 
       <!-- Card 4 -->
       <div class="team-card">
-        <img src="img/Eric.png" alt="Integrante 4">
+        <img src="img/Maria1.png" alt="Integrante 4">
         <div class="team-info">
-          <h3>Eric Olivera</h3>
+          <h3>Maria Peña</h3>
           <p>UI/UX Designer</p>
+          <div class="team-social">
+            <a href="https://www.linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn de Eric Olivera" class="team-social-link">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="https://github.com" target="_blank" rel="noopener" aria-label="GitHub de Eric Olivera" class="team-social-link">
+              <i class="bi bi-github"></i>
+            </a>
+          </div>
         </div>
       </div>
       <!-- Card 4 -->
       <div class="team-card">
-        <img src="img/Lore.png" alt="Integrante 4">
+        <img src="img/Maria2.png" alt="Integrante 4">
         <div class="team-info">
-          <h3>Loreley Sarmiento</h3>
+          <h3>Maria Pilares</h3>
           <p>UI/UX Designer</p>
+          <div class="team-social">
+            <a href="https://www.linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn de Loreley Sarmiento" class="team-social-link">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="https://github.com" target="_blank" rel="noopener" aria-label="GitHub de Loreley Sarmiento" class="team-social-link">
+              <i class="bi bi-github"></i>
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -552,7 +628,10 @@
     <div class="footer-bottom">
       <div class="container">
         <div class="footer-bottom-content">
-          <p data-i18n="footer.copyright">&copy; 2025 WORKHUB1. Todos los derechos reservados.</p>
+          <div class="footer-copy-wrap">
+            <img src="img/apex2.png" alt="Apex" class="footer-inline-apex">
+            <p data-i18n="footer.copyright">&copy; 2026 Apex Cybernetics. Todos los derechos reservados.</p>
+          </div>
           <div class="footer-bottom-links">
             <a href="#" data-i18n="footer.privacy">Privacidad</a>
             <a href="#" data-i18n="footer.terms">Términos</a>

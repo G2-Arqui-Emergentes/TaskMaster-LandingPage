@@ -9,6 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const newsletterForm = document.querySelector('.newsletter-form');
   const themeToggle = document.querySelector('.theme-toggle');
   const languageToggle = document.querySelector('.language-toggle');
+  const featureSlides = document.querySelectorAll('.feature-slide');
+  const featureDots = document.querySelectorAll('.feature-dot');
+  const featurePrev = document.querySelector('.feature-prev');
+  const featureNext = document.querySelector('.feature-next');
+  let currentFeatureSlide = 0;
 
   // Traducciones
   const translations = {
@@ -27,18 +32,25 @@ document.addEventListener('DOMContentLoaded', () => {
         cta: "Descargar Aplicación"
       },
       features: {
+        kicker: "Potencia tu equipo",
         title: "Características principales",
         sprint_stats: {
           title: "Gestión de Proyectos y Tareas",
-          description: "Organiza tus proyectos y tareas en un solo lugar. Asigna responsabilidades, define plazos y prioridades, y permite a los miembros del equipo actualizar su progreso en tiempo real. Asegura un flujo de trabajo ordenado y eficiente, sin duplicidad de esfuerzos."
+          description: "Organiza tus proyectos y tareas en un solo lugar. Asigna responsabilidades, define plazos y prioridades, y permite a los miembros del equipo actualizar su progreso en tiempo real. Asegura un flujo de trabajo ordenado y eficiente, sin duplicidad de esfuerzos.",
+          point_1: "Asignación inteligente",
+          point_2: "Flujo sin duplicidad"
         },
         team_management: {
           title: "Colaboración en Tiempo Real",
-          description: "Facilita la comunicación entre los miembros del equipo mediante notificaciones instantáneas. Los cambios en las tareas y proyectos se reflejan en tiempo real, asegurando que todos los miembros estén siempre alineados y actualizados."
+          description: "Facilita la comunicación entre los miembros del equipo mediante notificaciones instantáneas. Los cambios en las tareas y proyectos se reflejan en tiempo real, asegurando que todos los miembros estén siempre alineados y actualizados.",
+          point_1: "Notificaciones instantáneas",
+          point_2: "Equipo siempre alineado"
         },
         backlog_management: {
           title: "Visualización y Seguimiento del Progreso",
-          description: "Visualiza el estado de los proyectos y tareas a través de tableros y calendarios interactivos. Permite un seguimiento claro y efectivo del avance, ayudando a los líderes de proyecto a identificar rápidamente posibles retrasos o áreas que requieren atención."
+          description: "Visualiza el estado de los proyectos y tareas a través de tableros y calendarios interactivos. Permite un seguimiento claro y efectivo del avance, ayudando a los líderes de proyecto a identificar rápidamente posibles retrasos o áreas que requieren atención.",
+          point_1: "Tableros interactivos",
+          point_2: "Detección de retrasos"
         }
       },
       benefits: {
@@ -61,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       about: {
         title: "Nosotros",
-        description: "WORKHUB es una startup dedicada a desarrollar soluciones innovadoras para optimizar la gestión de proyectos en las empresas. Nos enfocamos en crear herramientas que mejoren la eficiencia, fomenten la colaboración y ayuden a los equipos a alcanzar sus objetivos de manera efectiva.",
+        description: "Apex Cybernetics es una startup dedicada a desarrollar soluciones innovadoras para optimizar la gestión de proyectos en las empresas. Nos enfocamos en crear herramientas que mejoren la eficiencia, fomenten la colaboración y ayuden a los equipos a alcanzar sus objetivos de manera efectiva.",
         mission: "Nuestra misión es elevar la eficiencia y calidad de los proyectos en startups de software, optimizando flujos de trabajo y facilitando la toma de decisiones basadas en datos.",
         vision: "Aspiramos a ser líderes en la gestión de proyectos de software, ofreciendo soluciones que impulsen el éxito y el crecimiento sostenible de las empresas emergentes."
       },
@@ -136,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
           title: "Mantente informado",
           description: "Suscríbete a nuestro boletín para recibir noticias y actualizaciones."
         },
-        copyright: "&copy; 2025 WORKHUB. Todos los derechos reservados.",
+        copyright: "&copy; 2026 Apex Cybernetics. Todos los derechos reservados.",
         privacy: "Privacidad",
         terms: "Términos",
         cookies: "Cookies"
@@ -157,18 +169,25 @@ document.addEventListener('DOMContentLoaded', () => {
         cta: "Download App"
       },
       features: {
+        kicker: "Boost your team",
         title: "Key Features",
         sprint_stats: {
           title: "Project and Task Management",
-          description: "Organize your projects and tasks in one place. Assign responsibilities, set deadlines and priorities, and allow team members to update their progress in real-time. Ensure a smooth and efficient workflow without duplicated efforts."
+          description: "Organize your projects and tasks in one place. Assign responsibilities, set deadlines and priorities, and allow team members to update their progress in real-time. Ensure a smooth and efficient workflow without duplicated efforts.",
+          point_1: "Smart assignment",
+          point_2: "No duplicated workflow"
         },
         team_management: {
           title: "Real-Time Collaboration",
-          description: "Facilitate communication among team members through instant notifications. Changes in tasks and projects are reflected in real-time, ensuring all members are always aligned and updated."
+          description: "Facilitate communication among team members through instant notifications. Changes in tasks and projects are reflected in real-time, ensuring all members are always aligned and updated.",
+          point_1: "Instant notifications",
+          point_2: "Team always aligned"
         },
         backlog_management: {
           title: "Progress Visualization and Tracking",
-          description: "Visualize the status of projects and tasks through interactive boards and calendars. Allow for clear and effective tracking of progress, helping project leaders quickly identify potential delays or areas needing attention."
+          description: "Visualize the status of projects and tasks through interactive boards and calendars. Allow for clear and effective tracking of progress, helping project leaders quickly identify potential delays or areas needing attention.",
+          point_1: "Interactive boards",
+          point_2: "Delay detection"
         }
       },
       benefits: {
@@ -191,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       about: {
         title: "About Us",
-        description: "WORKHUB is a startup dedicated to developing innovative solutions to optimize project management in companies. We focus on creating tools that improve efficiency, foster collaboration, and help teams achieve their goals effectively.",
+        description: "Apex Cybernetics is a startup dedicated to developing innovative solutions to optimize project management in companies. We focus on creating tools that improve efficiency, foster collaboration, and help teams achieve their goals effectively.",
         mission: "Our mission is to elevate the efficiency and quality of projects in software startups, optimizing workflows and facilitating data-driven decision making.",
         vision: "We aspire to be leaders in software project management, offering solutions that drive success and sustainable growth of emerging companies."
       },
@@ -266,7 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
           title: "Stay Informed",
           description: "Subscribe to our newsletter to receive news and updates."
         },
-        copyright: "&copy; 2025 WORKHUB. All rights reserved.",
+        copyright: "&copy; 2026 Apex Cybernetics. All rights reserved.",
         privacy: "Privacy",
         terms: "Terms",
         cookies: "Cookies"
@@ -331,6 +350,28 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  function updateFeatureSlider(index) {
+    if (!featureSlides.length) {
+      return;
+    }
+
+    currentFeatureSlide = (index + featureSlides.length) % featureSlides.length;
+
+    featureSlides.forEach((slide, slideIndex) => {
+      slide.classList.toggle('active', slideIndex === currentFeatureSlide);
+    });
+
+    featureDots.forEach((dot, dotIndex) => {
+      const isActive = dotIndex === currentFeatureSlide;
+      dot.classList.toggle('active', isActive);
+      dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+    });
+  }
+
+  function changeFeatureSlide(direction) {
+    updateFeatureSlider(currentFeatureSlide + direction);
+  }
+
   function getNestedTranslation(obj, path) {
     return path.split('.').reduce((current, key) => current && current[key], obj);
   }
@@ -347,6 +388,25 @@ document.addEventListener('DOMContentLoaded', () => {
   if (languageToggle) {
     languageToggle.addEventListener('click', toggleLanguage);
   }
+
+  if (featurePrev) {
+    featurePrev.addEventListener('click', () => changeFeatureSlide(-1));
+  }
+
+  if (featureNext) {
+    featureNext.addEventListener('click', () => changeFeatureSlide(1));
+  }
+
+  featureDots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const targetSlide = Number(dot.getAttribute('data-slide'));
+      if (!Number.isNaN(targetSlide)) {
+        updateFeatureSlider(targetSlide);
+      }
+    });
+  });
+
+  updateFeatureSlider(0);
 
   // Función para el menú móvil
   if (hamburger) {
