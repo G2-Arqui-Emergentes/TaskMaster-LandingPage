@@ -8,12 +8,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const contactForm = document.querySelector('.contact-form');
   const newsletterForm = document.querySelector('.newsletter-form');
   const themeToggle = document.querySelector('.theme-toggle');
+  const navLogoImage = document.querySelector('.nav-logo img');
   const languageToggle = document.querySelector('.language-toggle');
+  const languageDropdown = document.querySelector('.language-dropdown');
+  const languageOptions = document.querySelectorAll('.language-option');
   const featureSlides = document.querySelectorAll('.feature-slide');
   const featureDots = document.querySelectorAll('.feature-dot');
   const featurePrev = document.querySelector('.feature-prev');
   const featureNext = document.querySelector('.feature-next');
   let currentFeatureSlide = 0;
+
+  const EMAILJS_SERVICE_ID = 'service_l5hz4w5';
+  const EMAILJS_TEMPLATE_ID = 'template_b4ayd7d';
+  const EMAILJS_PUBLIC_KEY = '-Vzw4Ym1y-v2h4be2';
+  const emailjsConfigured = ![EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, EMAILJS_PUBLIC_KEY].some(value => value.startsWith('TU_'));
 
   // Traducciones
   const translations = {
@@ -148,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
           title: "Mantente informado",
           description: "Suscríbete a nuestro boletín para recibir noticias y actualizaciones."
         },
-        copyright: "&copy; 2026 Apex Cybernetics. Todos los derechos reservados.",
+        copyright: "Copyright &copy; 2026 Apex Cybernetics.",
         privacy: "Privacidad",
         terms: "Términos",
         cookies: "Cookies"
@@ -285,7 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
           title: "Stay Informed",
           description: "Subscribe to our newsletter to receive news and updates."
         },
-        copyright: "&copy; 2026 Apex Cybernetics. All rights reserved.",
+        copyright: "Copyright &copy; 2026 Apex Cybernetics",
         privacy: "Privacy",
         terms: "Terms",
         cookies: "Cookies"
@@ -293,10 +301,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  // Mapa de códigos de idioma a nombres completos para mostrar en el toggle
+  const languageNames = {
+    de: 'Deutsch',
+    en: 'English',
+    es: 'Español',
+    fr: 'Français',
+    it: 'Italiano',
+    ko: '한국어',
+    nl: 'Nederlands',
+    ja: '日本語',
+    pl: 'Polski',
+    pt: 'Português',
+    ru: 'Русский',
+    zh: '中文'
+  };
+
   // Función para el tema oscuro
+  function updateNavLogo(theme) {
+    if (!navLogoImage) {
+      return;
+    }
+
+    const lightLogo = navLogoImage.getAttribute('data-light-src');
+    const darkLogo = navLogoImage.getAttribute('data-dark-src');
+    navLogoImage.src = theme === 'dark' && darkLogo ? darkLogo : lightLogo || navLogoImage.src;
+  }
+
   function initTheme() {
     const savedTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
+    updateNavLogo(savedTheme);
   }
 
   function toggleTheme() {
@@ -305,6 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     document.documentElement.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
+    updateNavLogo(newTheme);
   }
 
   // Función para cambio de idioma
@@ -326,28 +362,30 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateLanguage(language) {
     const langText = document.querySelector('.lang-text');
     if (langText) {
-      langText.textContent = language === 'es' ? 'EN' : 'ES';
+      langText.textContent = languageNames[language] || (language || '').toUpperCase();
     }
 
-    // Actualizar todos los elementos con data-i18n
-    const elements = document.querySelectorAll('[data-i18n]');
-    elements.forEach(element => {
-      const key = element.getAttribute('data-i18n');
-      const translation = getNestedTranslation(translations[language], key);
-      if (translation) {
-        element.innerHTML = translation;
-      }
-    });
+    // If we have translations for the selected language, update text.
+    if (translations[language]) {
+      const elements = document.querySelectorAll('[data-i18n]');
+      elements.forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        const translation = getNestedTranslation(translations[language], key);
+        if (translation) {
+          element.innerHTML = translation;
+        }
+      });
 
-    // Actualizar placeholders
-    const placeholderElements = document.querySelectorAll('[data-i18n-placeholder]');
-    placeholderElements.forEach(element => {
-      const key = element.getAttribute('data-i18n-placeholder');
-      const translation = getNestedTranslation(translations[language], key);
-      if (translation) {
-        element.setAttribute('placeholder', translation);
-      }
-    });
+      // Actualizar placeholders
+      const placeholderElements = document.querySelectorAll('[data-i18n-placeholder]');
+      placeholderElements.forEach(element => {
+        const key = element.getAttribute('data-i18n-placeholder');
+        const translation = getNestedTranslation(translations[language], key);
+        if (translation) {
+          element.setAttribute('placeholder', translation);
+        }
+      });
+    }
   }
 
   function updateFeatureSlider(index) {
@@ -376,6 +414,47 @@ document.addEventListener('DOMContentLoaded', () => {
     return path.split('.').reduce((current, key) => current && current[key], obj);
   }
 
+  if (typeof window.emailjs !== 'undefined' && emailjsConfigured) {
+    window.emailjs.init(EMAILJS_PUBLIC_KEY);
+  }
+
+  function setFormStatus(form, message, type = 'success') {
+    if (!form) {
+      return;
+    }
+
+    let statusElement = form.querySelector('.form-status-message');
+
+    if (!statusElement) {
+      statusElement = document.createElement('p');
+      statusElement.className = 'form-status-message';
+      form.appendChild(statusElement);
+    }
+
+    statusElement.textContent = message;
+    statusElement.classList.remove('is-success', 'is-error');
+    statusElement.classList.add(type === 'error' ? 'is-error' : 'is-success');
+  }
+
+  function setButtonLoading(button, isLoading, loadingText) {
+    if (!button) {
+      return;
+    }
+
+    if (isLoading) {
+      button.dataset.originalText = button.innerHTML;
+      button.disabled = true;
+      button.innerHTML = loadingText;
+      return;
+    }
+
+    button.disabled = false;
+    if (button.dataset.originalText) {
+      button.innerHTML = button.dataset.originalText;
+      delete button.dataset.originalText;
+    }
+  }
+
   // Inicializar tema e idioma
   initTheme();
   initLanguage();
@@ -386,8 +465,37 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (languageToggle) {
-    languageToggle.addEventListener('click', toggleLanguage);
+    languageToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const expanded = languageToggle.getAttribute('aria-expanded') === 'true';
+      languageToggle.setAttribute('aria-expanded', String(!expanded));
+      if (languageDropdown) languageDropdown.classList.toggle('open', !expanded);
+    });
   }
+
+  if (languageOptions && languageOptions.length) {
+    languageOptions.forEach(opt => {
+      opt.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const lang = opt.getAttribute('data-lang');
+        if (lang) {
+          document.documentElement.setAttribute('lang', lang);
+          localStorage.setItem('language', lang);
+          updateLanguage(lang);
+        }
+        if (languageToggle) languageToggle.setAttribute('aria-expanded', 'false');
+        if (languageDropdown) languageDropdown.classList.remove('open');
+      });
+    });
+  }
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (languageDropdown && !languageDropdown.contains(e.target)) {
+      languageDropdown.classList.remove('open');
+      if (languageToggle) languageToggle.setAttribute('aria-expanded', 'false');
+    }
+  });
 
   if (featurePrev) {
     featurePrev.addEventListener('click', () => changeFeatureSlide(-1));
@@ -545,28 +653,29 @@ document.addEventListener('DOMContentLoaded', () => {
       
       // Si el formulario es válido, enviar datos
       if (isValid) {
-        // Simulación de envío exitoso
         const submitButton = contactForm.querySelector('.submit-button');
-        const originalButtonText = submitButton.innerHTML;
-        
-        submitButton.disabled = true;
-        submitButton.innerHTML = '<span class="button-text">Enviando...</span>';
-        
-        // Simular una petición con un retraso
-        setTimeout(() => {
-          // Mostrar mensaje de éxito
-          const formCard = document.querySelector('.form-card');
-          formCard.innerHTML = `
-            <div class="success-message">
-              <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#28a745" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-              </svg>
-              <h3>¡Mensaje enviado correctamente!</h3>
-              <p>Gracias por contactarnos. Nuestro equipo te responderá lo antes posible.</p>
-            </div>
-          `;
-        }, 1500);
+        const loadingLabel = '<span class="button-text">Enviando...</span>';
+
+        if (!emailjsConfigured || typeof window.emailjs === 'undefined') {
+          setFormStatus(contactForm, 'Configura EmailJS con tu service ID, template ID y public key antes de enviar.', 'error');
+          return;
+        }
+
+        setButtonLoading(submitButton, true, loadingLabel);
+        setFormStatus(contactForm, 'Enviando mensaje...', 'success');
+
+        window.emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, contactForm)
+          .then(() => {
+            contactForm.reset();
+            setFormStatus(contactForm, '¡Mensaje enviado correctamente! Te responderemos lo antes posible.', 'success');
+          })
+          .catch((error) => {
+            console.error('EmailJS contact form error:', error);
+            setFormStatus(contactForm, 'No se pudo enviar el mensaje. Revisa la configuración de EmailJS.', 'error');
+          })
+          .finally(() => {
+            setButtonLoading(submitButton, false);
+          });
       }
     });
   }
